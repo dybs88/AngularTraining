@@ -1,0 +1,80 @@
+<style>
+  input.ng-dirty.ng-invalid { border: 2px solid red }
+  input.ng-dirty.ng-valid {border: 2px solid green }
+</style>
+
+<h3 class="text-center">Rozdział 11-14</h3>
+<div class="text-white m-2 p-2">
+  W repozytorium jest {{ getProductCount() }} produktów
+</div>
+<h6>
+  Wybrany element {{ getProductName(selectedIndex + 1) }}
+</h6>
+<table class="table table-hover table-sm table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th>LP</th>
+      <th>Nazwa</th>
+      <th>Kategoria</th>
+      <th>Cena</th>
+    </tr>
+  </thead>
+
+  <tr (mouseover)="selectedIndex = i" *ngFor="let product of model.getProducts(); let i = index;" [class.table-success]="someText === product.name">
+    <td>{{ i + 1 }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.category }}</td>
+    <td>{{ product.price }}</td>
+  </tr>
+</table>
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-6">
+    <div class="form-group">
+      <label>Podgląd:</label>
+      <div class="form-control">{{ someText }}</div>
+      <label>Tekst:</label>
+      <input type="text" class="form-control" (input)="someText=$event.target.value">
+    </div>
+  </div>
+  <div class="col-3"></div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <h3>Standard Form</h3>
+    <form novalidate #form="ngForm" (ngSubmit)="submitForm(form, addProduct, stringify(newProduct))">
+      <div class="form-group inline">
+        Nazwa:
+        <input class="form-control" type="text" name="name" required #name="ngModel" [(ngModel)]="newProduct.name" />
+        <div style="font-size:small; color: red" *ngIf="name.invalid && name.dirty">Podaj kategorię produktu</div>
+      </div>
+      <div class="form-group inline">
+        Kategoria:
+        <input class="form-control" type="text" name="category" required #category="ngModel" [(ngModel)]="newProduct.category" />
+        <div style="font-size:small; color: red" *ngIf="category.invalid && category.dirty">Podaj kategorię produktu</div>
+      </div>
+      <div class="form-group inline">
+        Cena:
+        <input class="form-control" type="number" name="price" required #price="ngModel" [(ngModel)]="newProduct.price" />
+        <div style="font-size:small; color: red" *ngIf="price.invalid && price.dirty">Podaj cenę produktu</div>
+      </div>
+      <button class="btn btn-sm btn-primary" type="submit" [disabled]="formSubmitted && form.invalid"
+        [class.btn-secondary]="formSubmitted && form.invalid">Dodaj</button>
+    </form>
+  </div>
+  <div class="col-6">
+    <h3>Reactive Form</h3>
+    <form novalidate [formGroup]="customForm" (ngSubmit)="submitReactiveForm(addProduct, stringify(customForm.ModelFromForm))">
+      <div class="form-group inline" *ngFor="let control of customForm.ProductControls">
+        {{ control.label }}
+        <input class="form-control" type="{{control.type}}" name="{{control.modelProperty}}" formControlName="{{control.modelProperty}}" />
+        <ul class="text-danger list-unstyled" *ngIf="(formSubmitted || control.dirty) && control.invalid">
+          <li *ngFor="let error of control.getValidationMessages()">{{error}}</li>
+        </ul>
+      </div>
+      <button class="btn btn-sm btn-primary" type="submit" [disabled]="formSubmitted && customForm.invalid"
+        [class.btn-secondary]="formSubmitted && customForm.invalid">Dodaj</button>
+    </form>
+  </div>
+</div>

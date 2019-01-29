@@ -1,0 +1,84 @@
+<style>
+  input.ng-dirty.ng-invalid { border: 2px solid red }
+  input.ng-dirty.ng-valid {border: 2px solid green }
+</style>
+
+<h3 class="text-center">Rozdział 15-16</h3>
+<div class="row">
+  <div class="col-3">
+    <div class="custom-checkbox">
+      <label>
+        <input type="checkbox" [(ngModel)]="showDiv" />
+      </label>
+    </div>
+    <div *atIf="showDiv" class="form-group bg-info text-white p-2">
+      <label class="mr-1">Nazwa:</label>
+      <input class="bg primary" [(paModel)]="name" />
+    </div>
+    <table class="table table-sm table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>LP</th>
+          <th name="name" [(at-sort)]="products">Nazwa</th>
+          <th name="category" [(at-sort)]="products">Kategoria</th>
+          <th name="price" [(at-sort)]="products">Cena</th>
+          <th>Akcja</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let product of products; let i = index" [pa-attr]="products.length < 11 ? 'bg-success' : 'bg-warning'"
+        [pa-product]="product" (pa-category)="category=$event">
+        <td>{{ i + 1 }}</td>
+        <td>{{ product.name }}</td>
+        <td [pa-attr]="product.category == 'Piłka nożna' ? 'bg-info' : null">{{ product.category }}</td>
+        <td [pa-attr]="'bg-info'">{{ product.price }}</td>
+        <td>
+          <button class="btn btn-sm btn-danger" (click)="deleteProduct(product.id)">Usuń</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-3">
+    <form novalidate [formGroup]="customForm" (ngSubmit)="submitReactiveForm(addProduct, stringify(customForm.ModelFromForm))">
+      <div class="form-group inline" *ngFor="let control of customForm.ProductControls">
+        {{ control.label }}
+        <input class="form-control" type="{{control.type}}" name="{{control.modelProperty}}" formControlName="{{control.modelProperty}}" />
+        <ul class="text-danger list-unstyled" *ngIf="(formSubmitted || control.dirty) && control.invalid">
+          <li *ngFor="let error of control.getValidationMessages()">{{error}}</li>
+        </ul>
+      </div>
+      <button class="btn btn-sm btn-primary" type="submit" [disabled]="formSubmitted && customForm.invalid"
+        [class.btn-secondary]="formSubmitted && customForm.invalid">Dodaj</button>
+    </form>
+  </div>
+  <div class="col-3">
+    <div>
+      <label>
+        <input type="checkbox" [(ngModel)]="darkColor" />
+        Ciemny kolor komórki
+      </label>
+    </div>
+    <table class="table table-bordered table-sm" [atCellDarkColor]="darkColor">
+      <thead>
+        <tr>
+          <th>Nazwa:</th>
+          <th>Cena:</th>
+          <th>Czy pierwszy</th>
+          <th>Czy ostatni</th>
+          <th>Czy parzysty</th>
+          <th>Czy nieparzysty</th>
+          <th>Indeks</th>
+        </tr>
+      </thead>
+      <tr *atFor="let item of products; let index=index; let first=first; let last=last; let even=even; let odd=odd">
+        <td>{{ item.name }}</td>
+        <td>{{item.price}}</td>
+        <td [class]="first ? 'bg-primary' : ''">{{first}}</td>
+        <td [class]="last ? 'bg-danger' : ''">{{last}}</td>
+        <td [class]="even ? 'bg-success' : ''">{{even}}</td>
+        <td [class]="odd ? 'bg-warning' : ''">{{odd}}</td>
+        <td>{{index}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-3"></div>
+</div>
