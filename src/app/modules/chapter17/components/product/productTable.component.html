@@ -1,0 +1,22 @@
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>Lp</th>
+      <th>Nazwa</th>
+      <th>Kategoria</th>
+      <th>Cena</th>
+      <th>Akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of getProducts(); let i = index">
+      <td>{{i+1}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.category}}</td>
+      <td>{{product.price}}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">Usuń</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

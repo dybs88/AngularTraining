@@ -32,7 +32,7 @@ export class DataRepository {
   }
 
   deleteProduct(productId: number) {
-    const index = this.products.findIndex(p => p === productId);
+    const index = this.products.findIndex(p => p.id === productId);
     if (index > -1) {
       this.products.splice(index, 1);
     }
@@ -40,10 +40,29 @@ export class DataRepository {
 
   generateId(): number {
     let candidate = 0;
-    while (this.getProduct(candidate) !== null) {
+    while (this.getProduct(candidate) !== undefined) {
       candidate++;
     }
 
     return candidate;
+  }
+
+  sort(sortData: any) {
+    let propertyName = sortData["propertyName"];
+    let direction = sortData["sortDirection"];
+    this.products = this.products.sort((p1, p2) => {
+      if (direction === "desc") {
+        if (p1[propertyName] > p2[propertyName])
+          return 1;
+        else
+          return -1;
+      }
+      else {
+        if (p1[propertyName] > p2[propertyName])
+          return -1;
+        else
+          return 1;
+      }
+    });
   }
 }
