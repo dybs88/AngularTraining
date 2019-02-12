@@ -1,10 +1,12 @@
-<div class="m-2 p-2" [class.bg-success]="env" [class.bg-warning]="!env">
+<div class="m-2 p-2 form-inline" [class.bg-success]="env" [class.bg-warning]="!env">
   Tryb {{ env ? 'proukcyjny' : 'rozwojowy' }}
+  <locale class="ml-5"></locale>
 </div>
 <div class="btn-group ml-2">
   <button class="btn btn-primary mr-2" routerLink="/chapter1114" routerLinkActive="router-link-active">Rozdział 11-14</button>
   <button class="btn btn-primary mr-2" routerLink="/chapter1516" routerLinkActive="router-link-active">Rozdział 15-16</button>
   <button class="btn btn-primary mr-2" routerLink="/chapter17" routerLinkActive="router-link-active">Rozdział 17</button>
+  <button class="btn btn-primary mr-2" routerLink="/chapter18" routerLinkActive="router-link-active">Rozdział 18</button>
 </div>
 <div class="ml-2 mr-2">
   <router-outlet></router-outlet>

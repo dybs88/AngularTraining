@@ -21,6 +21,7 @@ export class DataRepository {
   }
 
   saveProduct(product: Product): Product {
+    product.date = new Date();
     if (product.id === 0) {
       product.id = this.generateId();
       this.products.push(product);

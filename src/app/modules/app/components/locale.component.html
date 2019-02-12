@@ -1,0 +1,10 @@
+<div class="form-group form-inline">
+    <label>Lokalizacja:</label>
+    <select class="form-control form-control-sm" [value]="selectedLocale" (change)="changeAppLocale($event.target.value)">
+      <option value="pl-PL">Polska</option>
+      <option value="en-US">Stany Zjednoczone</option>
+      <option value="en-EN">Anglia</option>
+      <option value="fr-FR">Francja</option>
+      <option value="de-DE">Niemcy</option>
+    </select>
+</div>
