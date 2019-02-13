@@ -1,0 +1,49 @@
+<div class="form-group form-inline">
+  <label class="mr-1">Stawka VAT:</label>
+  <select class="form-control form-control-sm" [value]="taxRate || 0" (change)="taxRate=$event.target.value">
+    <option value="0">0%</option>
+    <option value="10">10%</option>
+    <option value="20">20%</option>
+    <option value="30">30%</option>
+  </select>
+  <label>Waluta:</label>
+  <select class="form-control form-control-sm" [value]="currencySymbol || 'PLN'" (change)="currencySymbol=$event.target.value">
+    <option value="PLN">PLN</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+  </select>
+</div>
+<div class="form-group form-inline">
+    <label class="ml-1 mr-1">Kategoria:</label>
+    <input type="text" class="form-control form-control-sm" [value]="selectedCategory || ''" (change)="selectedCategory=$event.target.value" />
+</div>
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>Lp</th>
+      <th>Nazwa</th>
+      <th>Kategoria</th>
+      <th>Netto</th>
+      <th>Brutto</th>
+      <th>Data</th>
+      <th>Rabat</th>
+      <th>Po rabacie</th>
+      <th>Akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of getProducts() | filter:selectedCategory; let i = index">
+      <td>{{i+1}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.category}}</td>
+      <td>{{product.price | currency:currencySymbol: "symbol"}}</td>
+      <td>{{product.price | addTax: (taxRate || 0) | currency: currencySymbol: "symbol"}}</td>
+      <td>{{product.date | date: "mediumDate"}}</td>
+      <td [at-price]="product.price" #discount="discount">{{discount.discountAmount | currency: currencySymbol: "symbol"}}</td>
+      <td>{{product.price | addTax: (taxRate || 0) | discount | currency: currencySymbol: "symbol" }}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">Usuń</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

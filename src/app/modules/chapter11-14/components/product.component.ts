@@ -9,7 +9,6 @@ import { SubmitComponent } from "./base/submit.component";
 })
 
 export class ProductComponent extends SubmitComponent {
-  model: DataRepository;
   products: Product[];
   customForm = new ProductFormGroup();
 
@@ -17,9 +16,8 @@ export class ProductComponent extends SubmitComponent {
   public someText: string;
   newProduct: Product = new Product(0);
 
-  constructor() {
+  constructor(private model: DataRepository) {
     super();
-    this.model = new DataRepository();
     this.products = this.model.getProducts();
   }
 

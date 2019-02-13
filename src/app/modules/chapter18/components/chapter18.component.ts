@@ -1,3 +1,4 @@
+import { DiscountService } from './../../chapter19/infrastructure/services/discount.service';
 import { Component } from "@angular/core";
 import { DataRepository } from "../../../models/repository.model";
 import { Product } from "../../../models/product.model";
@@ -7,12 +8,7 @@ import { Product } from "../../../models/product.model";
 })
 
 export class Chapter18Component {
-  model: DataRepository;
-
-
-
-  constructor() {
-    this.model = new DataRepository();
+  constructor(private model: DataRepository) {
   }
 
   addProduct = (p: Product) => {

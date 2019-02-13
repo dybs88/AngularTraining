@@ -9,10 +9,7 @@ import { SubmitComponent } from "./base/submit.component";
 })
 
 export class Chapter17Component {
-  model: DataRepository;
-
-  constructor() {
-    this.model = new DataRepository();
+  constructor(private model: DataRepository) {
   }
 
   addProduct = (p: Product) => {

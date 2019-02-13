@@ -1,3 +1,5 @@
+import { DataRepository } from './../../models/repository.model';
+import { DataSource } from './../../models/datasource.model';
 import { Chapter18Module } from './../chapter18/chapter18.module';
 import { Chapter18Component } from './../chapter18/components/chapter18.component';
 import { BrowserModule } from "@angular/platform-browser";
@@ -11,6 +13,8 @@ import { Chapter1516Module } from '../chapter15-16/chapter1516.module';
 import { Chapter17Module } from '../chapter17/chapter17.module';
 import { Chapter17Component } from '../chapter17/components/chapter17.component';
 import { LocaleComponent } from './components/locale.component';
+import { Chapter19Module } from '../chapter19/chapter19.module';
+import { Chapter19Component } from '../chapter19/components/chapter19.component';
 
 @NgModule({
   declarations: [
@@ -23,14 +27,17 @@ import { LocaleComponent } from './components/locale.component';
     Chapter1516Module,
     Chapter17Module,
     Chapter18Module,
+    Chapter19Module,
     RouterModule.forRoot([
       { path: "chapter1114", component: ProductComponent },
       { path: "chapter1516", component: Chapter1516Component },
       { path: "chapter17", component: Chapter17Component },
-      { path: "chapter18", component: Chapter18Component }
+      { path: "chapter18", component: Chapter18Component },
+      { path: "chapter19", component: Chapter19Component }
     ])
   ],
-  providers: [{ provide: LOCALE_ID, useValue: localStorage.getItem("locale_id")}],
+  providers: [{ provide: LOCALE_ID, useValue: localStorage.getItem("locale_id")},
+              DataSource, DataRepository],
   bootstrap: [AppComponent],
   schemas: [RouterModule]
 })

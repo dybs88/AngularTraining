@@ -1,13 +1,12 @@
+import { Injectable } from '@angular/core';
 import { DataSource } from "./datasource.model";
 import { Product } from "./product.model";
 import { generate, Observable } from "rxjs";
-
+@Injectable()
 export class DataRepository {
-  private data: DataSource;
   private products: Product[];
 
-  constructor() {
-    this.data = new DataSource();
+  constructor(private data: DataSource) {
     this.products = new Array<Product>();
     this.data.getProducts().forEach(p => this.products.push(p));
   }

@@ -9,7 +9,6 @@ import { SubmitComponent } from "./base/submit.component";
 })
 
 export class Chapter1516Component extends SubmitComponent {
-  model: DataRepository;
   products: Product[];
   newProduct: Product;
 
@@ -28,9 +27,8 @@ export class Chapter1516Component extends SubmitComponent {
   showDiv: boolean;
   darkColor: boolean;
 
-  constructor() {
+  constructor(private model: DataRepository) {
     super();
-    this.model = new DataRepository();
     this.customForm = new ProductFormGroup();
     this.products = this.model.getProducts();
     this.newProduct = (this.customForm as ProductFormGroup).ModelFromForm;

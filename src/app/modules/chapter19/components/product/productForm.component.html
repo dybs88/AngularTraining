@@ -1,0 +1,10 @@
+<form novalidate [formGroup]="customForm" (ngSubmit)="submitReactiveForm(onProductAdded, stringify(customForm.ModelFromForm))">
+  <div class="form-group" *ngFor="let control of customForm.ProductControls">
+    {{control.label}}
+    <input class="form-control" type="{{control.type}}" name="{{control.modelProperty}}" formControlName="{{control.modelProperty}}"/>
+    <ul class="text-danger list-unstyled" *ngIf="(formSubmitted || control.dirty) && control.invalid">
+        <li *ngFor="let error of control.getValidationMessages()">{{error}}</li>
+      </ul>
+  </div>
+  <button class="btn btn-primary btn-sm" type="submit">Dodaj</button>
+</form>
